@@ -1,5 +1,5 @@
 import writeFile from 'fs'
-const path = require("path")
+// import{ default as path } from 'path'
 
 module.exports = class nowPlayingPlugin {
     constructor(env) {
