@@ -1,0 +1,19 @@
+{
+    "name": "nowplayinginfo",
+    "version": "0.0.1",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "ISC",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/yazninja/nowplayinginfo.git"
+    },
+    "bugs": {
+        "url": "https://github.com/yazninja/nowplayinginfo/issues"
+    },
+    "homepage": "https://github.com/yazninja/nowplayinginfo#readme",
+    "description": "Outputs current song info to files"
+}
