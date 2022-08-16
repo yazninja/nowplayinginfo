@@ -1,4 +1,4 @@
-import writeFile from 'fs'
+const writeFile = require('fs').writeFile;
 // import{ default as path } from 'path'
 
 module.exports = class nowPlayingPlugin {
