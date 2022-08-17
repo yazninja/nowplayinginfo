@@ -1,4 +1,8 @@
-const writeFile = require('fs').writeFile;
+const writeFileSync = require('fs').writeFileSync;
+const appendFileSync = require('fs').appendFileSync;
+const existsSync = require('fs').existsSync;
+const mkdirSync = require('fs').mkdirSync;
+const https = require('node:https');
 // import{ default as path } from 'path'
 
 module.exports = class nowPlayingPlugin {
@@ -9,7 +13,7 @@ module.exports = class nowPlayingPlugin {
 
     // Called when the backend is ready
     onReady(win) {
-        writeFile(`${this.env.dir}/artist.txt`, "READY");
+
     }
 
     // Called when the renderer is ready (app.init())
@@ -17,23 +21,59 @@ module.exports = class nowPlayingPlugin {
         console.log("\n\n\n [nowPlayingInfoPlugin] Ready \n\n\n");
     }
     onPlaybackStateDidChange(attributes) {
+        if (!existsSync(`${this.env.dir}/dist`)) {
+            mkdirSync(`${this.env.dir}/dist`);
+        }
+        let artworkURL = attributes.artwork.url.replace('{h}', attributes.artwork.height).replace('{w}', attributes.artwork.width);
+        writeFileSync(`${this.env.dir}/dist/title.txt`, attributes.name)
+        console.log('The title has been saved!')
+        writeFileSync(`${this.env.dir}/dist/artist.txt`, attributes.artistName)
+        console.log('The artist has been saved!')
+        writeFileSync(`${this.env.dir}/dist/album.txt`, attributes.albumName)
+        console.log('The album has been saved!')
 
-        writeFile(`${this.env.dir}/artist.txt`, attributes.artistName, (err) => {
-            if (err) throw err;
-            console.log('The artist has been saved!');
-        })
-        writeFile(`${this.env.dir}/title.txt`, attributes.name, (err) => {
-            if (err) throw err;
-            console.log('The song has been saved!');
-        })
-        writeFile(`${this.env.dir}/album.txt`, attributes.albumName, (err) => {
-            if (err) throw err;
-            console.log('The album has been saved!');
-        })
+        https.get(artworkURL, (res) => {
+            writeFileSync(`${this.env.dir}/dist/artwork.jpg`, "")
+            console.log('statusCode:', res.statusCode);
+            console.log('headers:', res.headers);
+            res.on('data', (d) => {
+                appendFileSync(`${this.env.dir}/dist/artwork.jpg`, d)
+            }).on('error', (e) => {
+                console.error(e);
+            }).on('end', () => {
+                console.log('The artwork has been saved!')
+            })
+        });
+    }
+    onNowPlayingItemDidChange(attributes) {
+        if (!existsSync(`${this.env.dir}/dist`)) {
+            mkdirSync(`${this.env.dir}/dist`);
+        }
+        let artworkURL = attributes.artwork.url.replace('{h}', attributes.artwork.height).replace('{w}', attributes.artwork.width);
+        writeFileSync(`${this.env.dir}/dist/title.txt`, attributes.name)
+        console.log('The title has been saved!')
+        writeFileSync(`${this.env.dir}/dist/artist.txt`, attributes.artistName)
+        console.log('The artist has been saved!')
+        writeFileSync(`${this.env.dir}/dist/album.txt`, attributes.albumName)
+        console.log('The album has been saved!')
 
-        // console.log("Artist:", attributes.artistName);
-        // console.log("Album:", attributes.albumName);
-        // console.log("Track:", attributes.name);
-        console.log("Album Artwork", attributes.artwork.url.replace('{h}', attributes.artwork.height).replace('{w}', attributes.artwork.width));
+        https.get(artworkURL, (res) => {
+            writeFileSync(`${this.env.dir}/dist/artwork.jpg`, "")
+            console.log('statusCode:', res.statusCode);
+            console.log('headers:', res.headers);
+            res.on('data', (d) => {
+                appendFileSync(`${this.env.dir}/dist/artwork.jpg`, d)
+            }).on('error', (e) => {
+                console.error(e);
+            }).on('end', () => {
+                console.log('The artwork has been saved!')
+            })
+        });
+    }
+    onBeforeQuit() {
+        writeFileSync(`${this.env.dir}/dist/title.txt`, "")
+        writeFileSync(`${this.env.dir}/dist/artist.txt`, "")
+        writeFileSync(`${this.env.dir}/dist/album.txt`, "")
+        writeFileSync(`${this.env.dir}/dist/artwork.jpg`, "")
     }
 }
