@@ -6,7 +6,7 @@ Windows (Github):
 %appdata%\Cider\Plugins\gh_525515699\dist
 ```
 Windows (Microsoft Store):
-```
+```powershell
 %localappdata%\Packages\27554FireDevElijahKlauman.CiderAlpha_270bejk4xgzqp\LocalCache\Roaming\Cider\Plugins\gh_525515699\dist
 ```
 Linux:
