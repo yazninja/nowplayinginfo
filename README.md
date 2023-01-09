@@ -1,9 +1,13 @@
 # NowPlayingInfo Plugin for [Cider](https://cider.sh/) <img src="https://img.shields.io/github/stars/yazninja/nowplayinginfo?style=social" width="70"></img>
 Get Song info in seperate files. Best used for OBS Streaming or other sharing sources. Currently in:
 
-Windows: 
+Windows (Github): 
 ```powershell
 %appdata%\Cider\Plugins\gh_525515699\dist
+```
+Windows (Microsoft Store):
+```
+%localappdata%\Packages\27554FireDevElijahKlauman.CiderAlpha_270bejk4xgzqp\LocalCache\Roaming\Cider\Plugins\gh_525515699\dist
 ```
 Linux:
 ```sh
